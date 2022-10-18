@@ -68,3 +68,71 @@ proc `$`*[T](x: AFTensor[T]) : string =
   result.add "dtype:" & $(x.dtype) & ",\n"
   result.add "array:" & $(x.array)
   result.add ")"
+
+
+proc `+`*[T](lhs, rhs: AFTensor[T]): AFTensor[T] =
+  initAfTensor[T](lhs.array + rhs.array)
+
+proc `+`*[T](val: T, t: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](val + t.array)
+
+proc `+`*[T](t: AFTensor[T], val: T): AFTensor[T] =
+  initAFTensor[T](t.array + val)
+
+proc `+=`*[T](this: var AFTensor[T], val: AFTensor[T]) =
+  this.array += val.array
+
+proc `+=`*[T](this: var AFTensor[T], val: T) =
+  this.array += val
+
+proc `-`*[T](lhs, rhs: AFTensor[T]): AFTensor[T] =
+  initAfTensor[T](lhs.array - rhs.array)
+
+proc `-`*[T](val: T, t: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](val - t.array)
+
+proc `-`*[T](t: AFTensor[T], val: T): AFTensor[T] =
+  initAFTensor[T](t.array - val)
+
+proc `-=`*[T](this: var AFTensor[T], val: AFTensor[T]) =
+  this.array -= val.array
+
+proc `-=`*[T](this: var AFTensor[T], val: T) =
+  this.array -= val
+
+proc `*`*[T](lhs, rhs: AFTensor[T]): AFTensor[T] =
+  initAfTensor[T](lhs.array * rhs.array)
+
+proc `*`*[T](val: T, t: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](val * t.array)
+
+proc `*`*[T](t: AFTensor[T], val: T): AFTensor[T] =
+  initAFTensor[T](t.array * val)
+
+proc `*=`*[T](this: var AFTensor[T], val: AFTensor[T]) =
+  this.array *= val.array
+
+proc `*=`*[T](this: var AFTensor[T], val: T) =
+  this.array *= val
+
+proc `/`*[T](lhs, rhs: AFTensor[T]): AFTensor[T] =
+  initAfTensor[T](lhs.array / rhs.array)
+
+proc `/`*[T](val: T, t: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](val / t.array)
+
+proc `/`*[T](t: AFTensor[T], val: T): AFTensor[T] =
+  initAFTensor[T](t.array / val)
+
+proc `/=`*[T](this: var AFTensor[T], val: AFTensor[T]) =
+  this.array /= val.array
+
+proc `/=`*[T](this: var AFTensor[T], val: T) =
+  this.array /= val
+
+
+proc `-`*[T](t: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](-t.array)
+
+proc toSeq*[T](t: AFTensor[T], count: int = -1): seq[T] =
+  t.array.toSeq(T, count)
