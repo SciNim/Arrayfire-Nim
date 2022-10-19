@@ -1,5 +1,5 @@
 import arrayfire
-import unittest
+import std/[unittest, math]
 
 suite "Plus operators":
   test "Array + Array":
@@ -123,6 +123,21 @@ suite "Plus operators":
     let y = -x
     check y.toSeq() == @[-12, -13]
 
+  test "Array % Array":
+    let x = initAfTensor[int](2, @[13, 23])
+    let y = initAfTensor[int](2, @[2, 5])
+    let z = x % y
+    check z.toSeq() == @[1, 3]
+
+  test "Array % Scalar":
+    let x1 = initAfTensor[int](2, @[12, 4])
+    let z1 = x1 % 5
+    check z1.toSeq() == @[2, 4]
+    let x2 = initAfTensor[float](2, @[5.0, 6.5])
+    let z2 = 11.0 % x2
+    check z2.toSeq() == @[11.0 mod 5.0, 11.0 mod 6.5]
+
+
   test "Not":
     let x1 = initAfTensor[int](2, @[0, 1])
     #let x2 = initAFTensor[bool](2, @[true, true])
@@ -130,4 +145,5 @@ suite "Plus operators":
     check z1.toSeq() == @[true, false]
     #let z2 = !x2
     #check z2.toSeq() == @[false, true]
+
 
