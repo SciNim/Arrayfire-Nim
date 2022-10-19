@@ -217,5 +217,20 @@ suite "Logical/Comparision operators":
     let z2 = 0.0 || x2
     check z2.toSeq() == @[false, true]
 
+suite "Bitwise operators":
+  test "Array & Array":
+    let x = initAFTensor[uint8](2, @[1'u8, 2])
+    let y = initAFTensor[uint8](2, @[3'u8, 3])
+    let z = x & y
+    check z.toSeq() == @[1'u8, 2]
+
+  test "Array & Scalar":
+    let x1 = initAFTensor[uint8](2, @[3'u8, 4])
+    let y: uint8 = 1'u8
+    let z1 = x1 & y
+    check z1.toSeq() == @[1'u8, 0]
+    let z2 = 5'u8 & x1
+    check z2.toSeq() == @[1'u8, 4]
+
 
 
