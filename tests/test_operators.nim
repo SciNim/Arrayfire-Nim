@@ -122,3 +122,12 @@ suite "Plus operators":
     let x = initAfTensor[int](2, @[12, 13])
     let y = -x
     check y.toSeq() == @[-12, -13]
+
+  test "Not":
+    let x1 = initAfTensor[int](2, @[0, 1])
+    #let x2 = initAFTensor[bool](2, @[true, true])
+    let z1 = !x1
+    check z1.toSeq() == @[true, false]
+    #let z2 = !x2
+    #check z2.toSeq() == @[false, true]
+

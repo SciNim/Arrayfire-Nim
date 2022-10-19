@@ -183,7 +183,7 @@ proc `<=`*[T](val: T, t: AFTensor[T]): AFTensor[T] =
 proc `<=`*[T](t: AFTensor[T], val: T): AFTensor[T] =
   initAFTensor[T](t.array <= val)
 
-proc `&&`*[T](lhs, rhs: AFTensor[T]): AFTensor[T] =
+proc `&&`*[T](lhs, rhs: AFTensor[T]): AFTensor[bool] =
   initAFTensor[bool](lhs.array && rhs.array)
 
 proc `&&`*[T](val: T, t: AFTensor[T]): AFTensor[T] =
