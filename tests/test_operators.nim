@@ -1,7 +1,7 @@
 import arrayfire
 import std/[unittest, math]
 
-suite "Plus operators":
+suite "Arithmetic operators":
   test "Array + Array":
     let x = initAfTensor[int](2, @[1, 4])
     let y = initAfTensor[int](2, @[2, 3])
@@ -137,13 +137,85 @@ suite "Plus operators":
     let z2 = 11.0 % x2
     check z2.toSeq() == @[11.0 mod 5.0, 11.0 mod 6.5]
 
-
+suite "Logical/Comparision operators":
   test "Not":
     let x1 = initAfTensor[int](2, @[0, 1])
-    #let x2 = initAFTensor[bool](2, @[true, true])
+    let x2 = initAFTensor[bool](2, @[true, false])
     let z1 = !x1
     check z1.toSeq() == @[true, false]
-    #let z2 = !x2
-    #check z2.toSeq() == @[false, true]
+    let z2 = !x2
+    check z2.toSeq() == @[false, true]
+
+  test "Array == Array":
+    let x1 = initAFTensor[int](2, @[1, 2])
+    let x2 = initAFTensor[int](2, @[2, 2])
+    let z1 = x1 == x2
+    check z1.toSeq() == @[false, true]
+    check (x1==x1).toSeq() == @[true, true]
+
+  test "Array == Scalar":
+    let x1 = initAFTensor[int](2, @[1, 2])
+    let z1 = x1 == 1
+    check z1.toSeq() == @[true, false]
+    let x2 = initAFTensor[float](2, @[1.0, 2.0])
+    let z2 = 2.0 == x2
+    check z2.toSeq() == @[false, true]
+
+  test "Array < Array":
+    let x1 = initAFTensor[int](2, @[1, 2])
+    let x2 = initAFTensor[int](2, @[2, 2])
+    let z1 = x1 < x2
+    check z1.toSeq() == @[true, false]
+
+  test "Array < Scalar":
+    let x1 = initAFTensor[int](2, @[1, 2])
+    let z1 = x1 < 2
+    check z1.toSeq() == @[true, false]
+    let x2 = initAFTensor[float](2, @[1.0, 2.0])
+    let z2 = 1.0 < x2
+    check z2.toSeq() == @[false, true]
+
+  test "Array <= Array":
+    let x1 = initAFTensor[int](2, @[1, 2])
+    let x2 = initAFTensor[int](2, @[2, 2])
+    let z1 = x2 <= x1
+    check z1.toSeq() == @[false, true]
+
+  test "Array <= Scalar":
+    let x1 = initAFTensor[int](2, @[1, 2])
+    let z1 = x1 <= 2
+    check z1.toSeq() == @[true, true]
+    let x2 = initAFTensor[float](2, @[1.0, 2.0])
+    let z2 = 1.0 <= x2
+    check z2.toSeq() == @[true, true]
+
+  test "Array && Array":
+    let x1 = initAFTensor[int](2, @[0, 2])
+    let x2 = initAFTensor[int](2, @[2, 1])
+    let z1 = x2 && x1
+    check z1.toSeq() == @[false, true]
+
+  test "Array && Scalar":
+    let x1 = initAFTensor[int](2, @[1, 0])
+    let z1 = x1 && 2
+    check z1.toSeq() == @[true, false]
+    let x2 = initAFTensor[float](2, @[1.0, 2.0])
+    let z2 = 0.0 && x2
+    check z2.toSeq() == @[false, false]
+
+  test "Array || Array":
+    let x1 = initAFTensor[int](2, @[0, 0])
+    let x2 = initAFTensor[int](2, @[0, 1])
+    let z1 = x2 || x1
+    check z1.toSeq() == @[false, true]
+
+  test "Array || Scalar":
+    let x1 = initAFTensor[int](2, @[1, 0])
+    let z1 = x1 || 2
+    check z1.toSeq() == @[true, true]
+    let x2 = initAFTensor[float](2, @[0.0, 2.0])
+    let z2 = 0.0 || x2
+    check z2.toSeq() == @[false, true]
+
 
 
