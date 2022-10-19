@@ -29,6 +29,7 @@ else:
 type
   intl* = clonglong
   uintl* = culonglong
+
   Err* {.pure, size: sizeof(cint).} = enum
     SUCCESS = 0, ERR_NO_MEM = 101, ERR_DRIVER = 102, ERR_RUNTIME = 103,
     ERR_INVALID_ARRAY = 201, ERR_ARG = 202, ERR_SIZE = 203, ERR_TYPE = 204,
