@@ -29,7 +29,6 @@ proc getDType*(tname: string): DType =
 proc getDtype*[T](): Dtype =
   result = dtype_map[$(T)]
 
-
 const dtype_size_map = {
   DType.f32: sizeof(float32),
   DType.c32: sizeof(float32)*2,
@@ -62,15 +61,30 @@ converter toInt*(i: cint): int = int(i)
 when sizeof(clong) != sizeof(cint):
   converter toInt*(i: clong): int = int(i)
 
+# Arrayfire made the choice to NOT use fixed size int defined in C++11
+# This means than there is currently no constructor for long type but only for long long
+# Nim on the other hand, use fixed size integer on code generation
+# Hence the workaroud of using clonglong and culonglong instead of the default
 proc afa*[T](dims: Dim4, data: openarray[T]): AFArray =
   when T is bool:
     var pdata = cast[ptr uint8](unsafeAddr(data[0]))
     # afHost means copy, afDevice means move
-    result = afa[uint8](dims, pdata, afHost).as(getDtype[bool]())
+    result = bindings.afa[uint8](dims, pdata, Source.afHost).as(getDtype[T]())
+  elif T is int64:
+    assert sizeof(int64) == sizeof(clonglong)
+    var pdata = cast[ptr clonglong](unsafeAddr(data[0]))
+    # afHost means copy, afDevice means move
+    result = bindings.afa[clonglong](dims, pdata, Source.afHost).as(getDtype[T]())
+  elif T is uint64:
+    assert sizeof(uint64) == sizeof(unsigned clonglong)
+    var pdata = cast[ptr culonglong](unsafeAddr(data[0]))
+    # afHost means copy, afDevice means move
+    result = bindings.afa[culonglong](dims, pdata, Source.afHost).as(getDtype[T]())
+
   else:
     var pdata = unsafeAddr(data[0])
     # afHost means copy, afDevice means move
-    result = afa[T](dims, pdata, afHost)
+    result = bindings.afa[T](dims, pdata, Source.afHost)
 
 proc afa*[T](dims: Dim4, data: openarray[T], AFArray_type: DType): AFArray =
   let tmp = afa(dims, data)
