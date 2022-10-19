@@ -26,7 +26,7 @@ const dtype_map = {
 proc getDType*(tname: string): DType =
   result = dtype_map[tname]
 
-proc getDtype*[T]() : Dtype =
+proc getDtype*[T](): Dtype =
   result = dtype_map[$(T)]
 
 
@@ -62,24 +62,15 @@ converter toInt*(i: cint): int = int(i)
 when sizeof(clong) != sizeof(cint):
   converter toInt*(i: clong): int = int(i)
 
-proc copy_array_to_c[T](data: openarray[T]): pointer =
-  doAssert len(data) > 0
-  result = alloc0(data.len*sizeof(T))
-  for i in 0..<data.len:
-    var target_ptr = cast[ptr T](cast[int](result) + (i * sizeof(T)))
-    target_ptr[] = data[i]
-
 proc afa*[T](dims: Dim4, data: openarray[T]): AFArray =
-  when (T is int):
-    var cc = newSeq[int32]()
-    for i in data:
-      cc.add(int32(i))
-    let cdata = copy_array_to_c(cc)
-    result = afa[int32](dims, cast[ptr int32](cdata))
+  when T is bool:
+    var pdata = cast[ptr uint8](unsafeAddr(data[0]))
+    # afHost means copy, afDevice means move
+    result = afa[uint8](dims, pdata, afHost).as(getDtype[bool]())
   else:
-    let cdata = copy_array_to_c(data)
-    result = afa[T](dims, cast[ptr T](cdata))
-  dealloc(cdata)
+    var pdata = unsafeAddr(data[0])
+    # afHost means copy, afDevice means move
+    result = afa[T](dims, pdata, afHost)
 
 proc afa*[T](dims: Dim4, data: openarray[T], AFArray_type: DType): AFArray =
   let tmp = afa(dims, data)
@@ -111,22 +102,11 @@ proc afa*[T](dim0: DimT, dim1: DimT, dim2: DimT, dim3: DimT, data: openarray[T],
     AFArray_type: DType): AFArray =
   afa(dim4(dim0, dim1, dim2, dim3), data, AFArray_type)
 
-
 proc afa*[T](dims: Dim4, slice: Slice[T]): AFArray =
   var data: seq[int] = @[]
   for i in slice.a..slice.b:
     data.add(i)
-  when(T is int):
-    var cc = newSeq[int32]()
-    for i in data:
-      cc.add(int32(i))
-    let cdata = copy_array_to_c(cc)
-    result = afa[int32](dims, cast[ptr int32](cdata), src = Source.afHost)
-  else:
-    let cdata = copy_array_to_c(data)
-    result = afa[T](dims, cast[ptr T](cdata), src = Source.afHost)
-  dealloc(cdata)
-
+  result = afa[T](dims, data)
 
 proc afa*[T](dims: Dim4, slice: Slice[T], AFArray_type: DType): AFArray =
   let tmp = afa(dims, slice)

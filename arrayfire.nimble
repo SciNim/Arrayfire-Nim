@@ -13,4 +13,3 @@ requires "nim >= 1.6.0"
 switch("mm", "orc")
 
 # sudo apt install libforge-dev arrayfire-headers arrayfire-cpu3-dev arrayfire-doc
-
