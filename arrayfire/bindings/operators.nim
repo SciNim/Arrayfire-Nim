@@ -18,6 +18,9 @@ when sizeof(culong) != sizeof(cuint):
 
 proc `+=`*(this: var AFArray; val: clonglong) {.importcpp: "(# += #)".}
 proc `+=`*(this: var AFArray; val: culonglong) {.importcpp: "(# += #)".}
+proc `+=`*(this: var AFArray; val: cshort) {.importcpp: "(# += #)".}
+proc `+=`*(this: var AFArray; val: cushort) {.importcpp: "(# += #)".}
+proc `+=`*(this: var AFArray; val: uint8) {.importcpp: "(# += #)".}
 
 proc `-=`*(this: var AFArray; val: AFArray) {.importcpp: "(# -= #)".}
 proc `-=`*(this: var AFArray; val: cdouble) {.importcpp: "(# -= #)".}
@@ -35,6 +38,9 @@ when sizeof(culong) != sizeof(cuint):
 
 proc `-=`*(this: var AFArray; val: clonglong) {.importcpp: "(# -= #)".}
 proc `-=`*(this: var AFArray; val: culonglong) {.importcpp: "(# -= #)".}
+proc `-=`*(this: var AFArray; val: cshort) {.importcpp: "(# -= #)".}
+proc `-=`*(this: var AFArray; val: cushort) {.importcpp: "(# -= #)".}
+proc `-=`*(this: var AFArray; val: uint8) {.importcpp: "(# -= #)".}
 
 proc `*=`*(this: var AFArray; val: AFArray) {.importcpp: "(# *= #)".}
 proc `*=`*(this: var AFArray; val: cdouble) {.importcpp: "(# *= #)".}
@@ -52,6 +58,9 @@ when sizeof(culong) != sizeof(cuint):
 
 proc `*=`*(this: var AFArray; val: clonglong) {.importcpp: "(# *= #)".}
 proc `*=`*(this: var AFArray; val: culonglong) {.importcpp: "(# *= #)".}
+proc `*=`*(this: var AFArray; val: cshort) {.importcpp: "(# *= #)".}
+proc `*=`*(this: var AFArray; val: cushort) {.importcpp: "(# *= #)".}
+proc `*=`*(this: var AFArray; val: uint8) {.importcpp: "(# *= #)".}
 
 proc `/=`*(this: var AFArray; val: AFArray) {.importcpp: "(# /= #)".}
 proc `/=`*(this: var AFArray; val: cdouble) {.importcpp: "(# /= #)".}
@@ -69,6 +78,9 @@ when sizeof(culong) != sizeof(cuint):
 
 proc `/=`*(this: var AFArray; val: clonglong) {.importcpp: "(# /= #)".}
 proc `/=`*(this: var AFArray; val: culonglong) {.importcpp: "(# /= #)".}
+proc `/=`*(this: var AFArray; val: cshort) {.importcpp: "(# /= #)".}
+proc `/=`*(this: var AFArray; val: cushort) {.importcpp: "(# /= #)".}
+proc `/=`*(this: var AFArray; val: uint8) {.importcpp: "(# /= #)".}
 
 proc `-`*(this: AFArray): AFArray {.noSideEffect, importcpp: "(- #)".}
 
@@ -85,6 +97,9 @@ proc `+`*(lhs: bool; rhs: AFArray): AFArray {.importcpp: "(# + #)".}
 proc `+`*(lhs: cint; rhs: AFArray): AFArray {.importcpp: "(# + #)".}
 proc `+`*(lhs: cuint; rhs: AFArray): AFArray {.importcpp: "(# + #)".}
 proc `+`*(lhs: char; rhs: AFArray): AFArray {.importcpp: "(# + #)".}
+proc `+`*(lhs: cshort; rhs: AFArray): AFArray {.importcpp: "(# + #)".}
+proc `+`*(lhs: cushort; rhs: AFArray): AFArray {.importcpp: "(# + #)".}
+proc `+`*(lhs: uint8; rhs: AFArray): AFArray {.importcpp: "(# + #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `+`*(lhs: clong; rhs: AFArray): AFArray {.importcpp: "(# + #)".}
@@ -100,6 +115,9 @@ proc `+`*(lhs: AFArray; rhs: bool): AFArray {.importcpp: "(# + #)".}
 proc `+`*(lhs: AFArray; rhs: cint): AFArray {.importcpp: "(# + #)".}
 proc `+`*(lhs: AFArray; rhs: cuint): AFArray {.importcpp: "(# + #)".}
 proc `+`*(lhs: AFArray; rhs: char): AFArray {.importcpp: "(# + #)".}
+proc `+`*(lhs: AFArray; rhs: cshort): AFArray {.importcpp: "(# + #)".}
+proc `+`*(lhs: AFArray; rhs: cushort): AFArray {.importcpp: "(# + #)".}
+proc `+`*(lhs: AFArray; rhs: uint8): AFArray {.importcpp: "(# + #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `+`*(lhs: AFArray; rhs: clong): AFArray {.importcpp: "(# + #)".}
@@ -117,6 +135,9 @@ proc `-`*(lhs: bool; rhs: AFArray): AFArray {.importcpp: "(# - #)".}
 proc `-`*(lhs: cint; rhs: AFArray): AFArray {.importcpp: "(# - #)".}
 proc `-`*(lhs: cuint; rhs: AFArray): AFArray {.importcpp: "(# - #)".}
 proc `-`*(lhs: char; rhs: AFArray): AFArray {.importcpp: "(# - #)".}
+proc `-`*(lhs: cshort; rhs: AFArray): AFArray {.importcpp: "(# - #)".}
+proc `-`*(lhs: cushort; rhs: AFArray): AFArray {.importcpp: "(# - #)".}
+proc `-`*(lhs: uint8; rhs: AFArray): AFArray {.importcpp: "(# - #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `-`*(lhs: clong; rhs: AFArray): AFArray {.importcpp: "(# - #)".}
@@ -132,6 +153,9 @@ proc `-`*(lhs: AFArray; rhs: bool): AFArray {.importcpp: "(# - #)".}
 proc `-`*(lhs: AFArray; rhs: cint): AFArray {.importcpp: "(# - #)".}
 proc `-`*(lhs: AFArray; rhs: cuint): AFArray {.importcpp: "(# - #)".}
 proc `-`*(lhs: AFArray; rhs: char): AFArray {.importcpp: "(# - #)".}
+proc `-`*(lhs: AFArray; rhs: cshort): AFArray {.importcpp: "(# - #)".}
+proc `-`*(lhs: AFArray; rhs: cushort): AFArray {.importcpp: "(# - #)".}
+proc `-`*(lhs: AFArray; rhs: uint8): AFArray {.importcpp: "(# - #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `-`*(lhs: AFArray; rhs: clong): AFArray {.importcpp: "(# - #)".}
@@ -149,6 +173,9 @@ proc `*`*(lhs: bool; rhs: AFArray): AFArray {.importcpp: "(# * #)".}
 proc `*`*(lhs: cint; rhs: AFArray): AFArray {.importcpp: "(# * #)".}
 proc `*`*(lhs: cuint; rhs: AFArray): AFArray {.importcpp: "(# * #)".}
 proc `*`*(lhs: char; rhs: AFArray): AFArray {.importcpp: "(# * #)".}
+proc `*`*(lhs: cshort; rhs: AFArray): AFArray {.importcpp: "(# * #)".}
+proc `*`*(lhs: cushort; rhs: AFArray): AFArray {.importcpp: "(# * #)".}
+proc `*`*(lhs: uint8; rhs: AFArray): AFArray {.importcpp: "(# * #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `*`*(lhs: clong; rhs: AFArray): AFArray {.importcpp: "(# * #)".}
@@ -163,6 +190,9 @@ proc `*`*(lhs: AFArray; rhs: bool): AFArray {.importcpp: "(# * #)".}
 proc `*`*(lhs: AFArray; rhs: cint): AFArray {.importcpp: "(# * #)".}
 proc `*`*(lhs: AFArray; rhs: cuint): AFArray {.importcpp: "(# * #)".}
 proc `*`*(lhs: AFArray; rhs: char): AFArray {.importcpp: "(# * #)".}
+proc `*`*(lhs: AFArray; rhs: cshort): AFArray {.importcpp: "(# * #)".}
+proc `*`*(lhs: AFArray; rhs: cushort): AFArray {.importcpp: "(# * #)".}
+proc `*`*(lhs: AFArray; rhs: uint8): AFArray {.importcpp: "(# * #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `*`*(lhs: AFArray; rhs: clong): AFArray {.importcpp: "(# * #)".}
@@ -179,6 +209,9 @@ proc `/`*(lhs: bool; rhs: AFArray): AFArray {.importcpp: "(# / #)".}
 proc `/`*(lhs: cint; rhs: AFArray): AFArray {.importcpp: "(# / #)".}
 proc `/`*(lhs: cuint; rhs: AFArray): AFArray {.importcpp: "(# / #)".}
 proc `/`*(lhs: char; rhs: AFArray): AFArray {.importcpp: "(# / #)".}
+proc `/`*(lhs: cshort; rhs: AFArray): AFArray {.importcpp: "(# / #)".}
+proc `/`*(lhs: cushort; rhs: AFArray): AFArray {.importcpp: "(# / #)".}
+proc `/`*(lhs: uint8; rhs: AFArray): AFArray {.importcpp: "(# / #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `/`*(lhs: clong; rhs: AFArray): AFArray {.importcpp: "(# / #)".}
@@ -193,6 +226,9 @@ proc `/`*(lhs: AFArray; rhs: bool): AFArray {.importcpp: "(# / #)".}
 proc `/`*(lhs: AFArray; rhs: cint): AFArray {.importcpp: "(# / #)".}
 proc `/`*(lhs: AFArray; rhs: cuint): AFArray {.importcpp: "(# / #)".}
 proc `/`*(lhs: AFArray; rhs: char): AFArray {.importcpp: "(# / #)".}
+proc `/`*(lhs: AFArray; rhs: cshort): AFArray {.importcpp: "(# / #)".}
+proc `/`*(lhs: AFArray; rhs: cushort): AFArray {.importcpp: "(# / #)".}
+proc `/`*(lhs: AFArray; rhs: uint8): AFArray {.importcpp: "(# / #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `/`*(lhs: AFArray; rhs: clong): AFArray {.importcpp: "(# / #)".}
@@ -209,6 +245,9 @@ proc `==`*(lhs: bool; rhs: AFArray): AFArray {.importcpp: "(# == #)".}
 proc `==`*(lhs: cint; rhs: AFArray): AFArray {.importcpp: "(# == #)".}
 proc `==`*(lhs: cuint; rhs: AFArray): AFArray {.importcpp: "(# == #)".}
 proc `==`*(lhs: char; rhs: AFArray): AFArray {.importcpp: "(# == #)".}
+proc `==`*(lhs: cshort; rhs: AFArray): AFArray {.importcpp: "(# == #)".}
+proc `==`*(lhs: cushort; rhs: AFArray): AFArray {.importcpp: "(# == #)".}
+proc `==`*(lhs: uint8; rhs: AFArray): AFArray {.importcpp: "(# == #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `==`*(lhs: clong; rhs: AFArray): AFArray {.importcpp: "(# == #)".}
@@ -223,6 +262,9 @@ proc `==`*(lhs: AFArray; rhs: bool): AFArray {.importcpp: "(# == #)".}
 proc `==`*(lhs: AFArray; rhs: cint): AFArray {.importcpp: "(# == #)".}
 proc `==`*(lhs: AFArray; rhs: cuint): AFArray {.importcpp: "(# == #)".}
 proc `==`*(lhs: AFArray; rhs: char): AFArray {.importcpp: "(# == #)".}
+proc `==`*(lhs: AFArray; rhs: cshort): AFArray {.importcpp: "(# == #)".}
+proc `==`*(lhs: AFArray; rhs: cushort): AFArray {.importcpp: "(# == #)".}
+proc `==`*(lhs: AFArray; rhs: uint8): AFArray {.importcpp: "(# == #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `==`*(lhs: AFArray; rhs: clong): AFArray {.importcpp: "(# == #)".}
@@ -239,6 +281,9 @@ proc `<`*(lhs: bool; rhs: AFArray): AFArray {.importcpp: "(# < #)".}
 proc `<`*(lhs: cint; rhs: AFArray): AFArray {.importcpp: "(# < #)".}
 proc `<`*(lhs: cuint; rhs: AFArray): AFArray {.importcpp: "(# < #)".}
 proc `<`*(lhs: char; rhs: AFArray): AFArray {.importcpp: "(# < #)".}
+proc `<`*(lhs: cshort; rhs: AFArray): AFArray {.importcpp: "(# < #)".}
+proc `<`*(lhs: cushort; rhs: AFArray): AFArray {.importcpp: "(# < #)".}
+proc `<`*(lhs: uint8; rhs: AFArray): AFArray {.importcpp: "(# < #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `<`*(lhs: clong; rhs: AFArray): AFArray {.importcpp: "(# < #)".}
@@ -254,6 +299,9 @@ proc `<`*(lhs: AFArray; rhs: bool): AFArray {.importcpp: "(# < #)".}
 proc `<`*(lhs: AFArray; rhs: cint): AFArray {.importcpp: "(# < #)".}
 proc `<`*(lhs: AFArray; rhs: cuint): AFArray {.importcpp: "(# < #)".}
 proc `<`*(lhs: AFArray; rhs: char): AFArray {.importcpp: "(# < #)".}
+proc `<`*(lhs: AFArray; rhs: cshort): AFArray {.importcpp: "(# < #)".}
+proc `<`*(lhs: AFArray; rhs: cushort): AFArray {.importcpp: "(# < #)".}
+proc `<`*(lhs: AFArray; rhs: uint8): AFArray {.importcpp: "(# < #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `<`*(lhs: AFArray; rhs: clong): AFArray {.importcpp: "(# < #)".}
@@ -271,6 +319,9 @@ proc `<=`*(lhs: bool; rhs: AFArray): AFArray {.importcpp: "(# <= #)".}
 proc `<=`*(lhs: cint; rhs: AFArray): AFArray {.importcpp: "(# <= #)".}
 proc `<=`*(lhs: cuint; rhs: AFArray): AFArray {.importcpp: "(# <= #)".}
 proc `<=`*(lhs: char; rhs: AFArray): AFArray {.importcpp: "(# <= #)".}
+proc `<=`*(lhs: cshort; rhs: AFArray): AFArray {.importcpp: "(# <= #)".}
+proc `<=`*(lhs: cushort; rhs: AFArray): AFArray {.importcpp: "(# <= #)".}
+proc `<=`*(lhs: uint8; rhs: AFArray): AFArray {.importcpp: "(# <= #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `<=`*(lhs: clong; rhs: AFArray): AFArray {.importcpp: "(# <= #)".}
@@ -286,6 +337,9 @@ proc `<=`*(lhs: AFArray; rhs: bool): AFArray {.importcpp: "(# <= #)".}
 proc `<=`*(lhs: AFArray; rhs: cint): AFArray {.importcpp: "(# <= #)".}
 proc `<=`*(lhs: AFArray; rhs: cuint): AFArray {.importcpp: "(# <= #)".}
 proc `<=`*(lhs: AFArray; rhs: char): AFArray {.importcpp: "(# <= #)".}
+proc `<=`*(lhs: AFArray; rhs: cshort): AFArray {.importcpp: "(# <= #)".}
+proc `<=`*(lhs: AFArray; rhs: cushort): AFArray {.importcpp: "(# <= #)".}
+proc `<=`*(lhs: AFArray; rhs: uint8): AFArray {.importcpp: "(# <= #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `<=`*(lhs: AFArray; rhs: clong): AFArray {.importcpp: "(# <= #)".}
@@ -303,6 +357,9 @@ proc `&&`*(lhs: bool; rhs: AFArray): AFArray {.importcpp: "(# && #)".}
 proc `&&`*(lhs: cint; rhs: AFArray): AFArray {.importcpp: "(# && #)".}
 proc `&&`*(lhs: cuint; rhs: AFArray): AFArray {.importcpp: "(# && #)".}
 proc `&&`*(lhs: char; rhs: AFArray): AFArray {.importcpp: "(# && #)".}
+proc `&&`*(lhs: cshort; rhs: AFArray): AFArray {.importcpp: "(# && #)".}
+proc `&&`*(lhs: cushort; rhs: AFArray): AFArray {.importcpp: "(# && #)".}
+proc `&&`*(lhs: uint8; rhs: AFArray): AFArray {.importcpp: "(# && #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `&&`*(lhs: clong; rhs: AFArray): AFArray {.importcpp: "(# && #)".}
@@ -318,6 +375,9 @@ proc `&&`*(lhs: AFArray; rhs: bool): AFArray {.importcpp: "(# && #)".}
 proc `&&`*(lhs: AFArray; rhs: cint): AFArray {.importcpp: "(# && #)".}
 proc `&&`*(lhs: AFArray; rhs: cuint): AFArray {.importcpp: "(# && #)".}
 proc `&&`*(lhs: AFArray; rhs: char): AFArray {.importcpp: "(# && #)".}
+proc `&&`*(lhs: AFArray; rhs: cshort): AFArray {.importcpp: "(# && #)".}
+proc `&&`*(lhs: AFArray; rhs: cushort): AFArray {.importcpp: "(# && #)".}
+proc `&&`*(lhs: AFArray; rhs: uint8): AFArray {.importcpp: "(# && #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `&&`*(lhs: AFArray; rhs: clong): AFArray {.importcpp: "(# && #)".}
@@ -335,6 +395,9 @@ proc `||`*(lhs: bool; rhs: AFArray): AFArray {.importcpp: "(# || #)".}
 proc `||`*(lhs: cint; rhs: AFArray): AFArray {.importcpp: "(# || #)".}
 proc `||`*(lhs: cuint; rhs: AFArray): AFArray {.importcpp: "(# || #)".}
 proc `||`*(lhs: char; rhs: AFArray): AFArray {.importcpp: "(# || #)".}
+proc `||`*(lhs: cshort; rhs: AFArray): AFArray {.importcpp: "(# || #)".}
+proc `||`*(lhs: cushort; rhs: AFArray): AFArray {.importcpp: "(# || #)".}
+proc `||`*(lhs: uint8; rhs: AFArray): AFArray {.importcpp: "(# || #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `||`*(lhs: clong; rhs: AFArray): AFArray {.importcpp: "(# || #)".}
@@ -350,6 +413,9 @@ proc `||`*(lhs: AFArray; rhs: bool): AFArray {.importcpp: "(# || #)".}
 proc `||`*(lhs: AFArray; rhs: cint): AFArray {.importcpp: "(# || #)".}
 proc `||`*(lhs: AFArray; rhs: cuint): AFArray {.importcpp: "(# || #)".}
 proc `||`*(lhs: AFArray; rhs: char): AFArray {.importcpp: "(# || #)".}
+proc `||`*(lhs: AFArray; rhs: cshort): AFArray {.importcpp: "(# || #)".}
+proc `||`*(lhs: AFArray; rhs: cushort): AFArray {.importcpp: "(# || #)".}
+proc `||`*(lhs: AFArray; rhs: uint8): AFArray {.importcpp: "(# || #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `||`*(lhs: AFArray; rhs: clong): AFArray {.importcpp: "(# || #)".}
@@ -367,6 +433,9 @@ proc `%`*(lhs: bool; rhs: AFArray): AFArray {.importcpp: "(# % #)".}
 proc `%`*(lhs: cint; rhs: AFArray): AFArray {.importcpp: "(# % #)".}
 proc `%`*(lhs: cuint; rhs: AFArray): AFArray {.importcpp: "(# % #)".}
 proc `%`*(lhs: char; rhs: AFArray): AFArray {.importcpp: "(# % #)".}
+proc `%`*(lhs: cshort; rhs: AFArray): AFArray {.importcpp: "(# % #)".}
+proc `%`*(lhs: cushort; rhs: AFArray): AFArray {.importcpp: "(# % #)".}
+proc `%`*(lhs: uint8; rhs: AFArray): AFArray {.importcpp: "(# % #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `%`*(lhs: clong; rhs: AFArray): AFArray {.importcpp: "(# % #)".}
@@ -383,6 +452,9 @@ proc `%`*(lhs: AFArray; rhs: bool): AFArray {.importcpp: "(# % #)".}
 proc `%`*(lhs: AFArray; rhs: cint): AFArray {.importcpp: "(# % #)".}
 proc `%`*(lhs: AFArray; rhs: cuint): AFArray {.importcpp: "(# % #)".}
 proc `%`*(lhs: AFArray; rhs: char): AFArray {.importcpp: "(# % #)".}
+proc `%`*(lhs: AFArray; rhs: cshort): AFArray {.importcpp: "(# % #)".}
+proc `%`*(lhs: AFArray; rhs: cushort): AFArray {.importcpp: "(# % #)".}
+proc `%`*(lhs: AFArray; rhs: uint8): AFArray {.importcpp: "(# % #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `%`*(lhs: AFArray; rhs: clong): AFArray {.importcpp: "(# % #)".}
@@ -400,6 +472,7 @@ proc `&`*(lhs: bool; rhs: AFArray): AFArray {.importcpp: "(# & #)".}
 proc `&`*(lhs: cint; rhs: AFArray): AFArray {.importcpp: "(# & #)".}
 proc `&`*(lhs: cuint; rhs: AFArray): AFArray {.importcpp: "(# & #)".}
 proc `&`*(lhs: char; rhs: AFArray): AFArray {.importcpp: "(# & #)".}
+proc `&`*(lhs: cshort; rhs: AFArray): AFArray {.importcpp: "(# & #)".}
 proc `&`*(lhs: cushort; rhs: AFArray): AFArray {.importcpp: "(# & #)".}
 proc `&`*(lhs: uint8; rhs: AFArray): AFArray {.importcpp: "(# & #)".}
 
@@ -417,6 +490,7 @@ proc `&`*(lhs: AFArray; rhs: bool): AFArray {.importcpp: "(# & #)".}
 proc `&`*(lhs: AFArray; rhs: cint): AFArray {.importcpp: "(# & #)".}
 proc `&`*(lhs: AFArray; rhs: cuint): AFArray {.importcpp: "(# & #)".}
 proc `&`*(lhs: AFArray; rhs: char): AFArray {.importcpp: "(# & #)".}
+proc `&`*(lhs: AFArray; rhs: cshort): AFArray {.importcpp: "(# & #)".}
 proc `&`*(lhs: AFArray; rhs: cushort): AFArray {.importcpp: "(# & #)".}
 proc `&`*(lhs: AFArray; rhs: uint8): AFArray {.importcpp: "(# & #)".}
 
@@ -436,6 +510,9 @@ proc `|`*(lhs: bool; rhs: AFArray): AFArray {.importcpp: "(# | #)".}
 proc `|`*(lhs: cint; rhs: AFArray): AFArray {.importcpp: "(# | #)".}
 proc `|`*(lhs: cuint; rhs: AFArray): AFArray {.importcpp: "(# | #)".}
 proc `|`*(lhs: char; rhs: AFArray): AFArray {.importcpp: "(# | #)".}
+proc `|`*(lhs: cshort; rhs: AFArray): AFArray {.importcpp: "(# | #)".}
+proc `|`*(lhs: cushort; rhs: AFArray): AFArray {.importcpp: "(# | #)".}
+proc `|`*(lhs: uint8; rhs: AFArray): AFArray {.importcpp: "(# | #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `|`*(lhs: clong; rhs: AFArray): AFArray {.importcpp: "(# | #)".}
@@ -451,6 +528,9 @@ proc `|`*(lhs: AFArray; rhs: bool): AFArray {.importcpp: "(# | #)".}
 proc `|`*(lhs: AFArray; rhs: cint): AFArray {.importcpp: "(# | #)".}
 proc `|`*(lhs: AFArray; rhs: cuint): AFArray {.importcpp: "(# | #)".}
 proc `|`*(lhs: AFArray; rhs: char): AFArray {.importcpp: "(# | #)".}
+proc `|`*(lhs: AFArray; rhs: cshort): AFArray {.importcpp: "(# | #)".}
+proc `|`*(lhs: AFArray; rhs: cushort): AFArray {.importcpp: "(# | #)".}
+proc `|`*(lhs: AFArray; rhs: uint8): AFArray {.importcpp: "(# | #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `|`*(lhs: AFArray; rhs: clong): AFArray {.importcpp: "(# | #)".}
@@ -468,6 +548,9 @@ proc `^`*(lhs: bool; rhs: AFArray): AFArray {.importcpp: "(# ^ #)".}
 proc `^`*(lhs: cint; rhs: AFArray): AFArray {.importcpp: "(# ^ #)".}
 proc `^`*(lhs: cuint; rhs: AFArray): AFArray {.importcpp: "(# ^ #)".}
 proc `^`*(lhs: char; rhs: AFArray): AFArray {.importcpp: "(# ^ #)".}
+proc `^`*(lhs: cshort; rhs: AFArray): AFArray {.importcpp: "(# ^ #)".}
+proc `^`*(lhs: cushort; rhs: AFArray): AFArray {.importcpp: "(# ^ #)".}
+proc `^`*(lhs: uint8; rhs: AFArray): AFArray {.importcpp: "(# ^ #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `^`*(lhs: clong; rhs: AFArray): AFArray {.importcpp: "(# ^ #)".}
@@ -483,6 +566,9 @@ proc `^`*(lhs: AFArray; rhs: bool): AFArray {.importcpp: "(# ^ #)".}
 proc `^`*(lhs: AFArray; rhs: cint): AFArray {.importcpp: "(# ^ #)".}
 proc `^`*(lhs: AFArray; rhs: cuint): AFArray {.importcpp: "(# ^ #)".}
 proc `^`*(lhs: AFArray; rhs: char): AFArray {.importcpp: "(# ^ #)".}
+proc `^`*(lhs: AFArray; rhs: cshort): AFArray {.importcpp: "(# ^ #)".}
+proc `^`*(lhs: AFArray; rhs: cushort): AFArray {.importcpp: "(# ^ #)".}
+proc `^`*(lhs: AFArray; rhs: uint8): AFArray {.importcpp: "(# ^ #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `^`*(lhs: AFArray; rhs: clong): AFArray {.importcpp: "(# ^ #)".}
@@ -500,6 +586,9 @@ proc `<<`*(lhs: bool; rhs: AFArray): AFArray {.importcpp: "(# << #)".}
 proc `<<`*(lhs: cint; rhs: AFArray): AFArray {.importcpp: "(# << #)".}
 proc `<<`*(lhs: cuint; rhs: AFArray): AFArray {.importcpp: "(# << #)".}
 proc `<<`*(lhs: char; rhs: AFArray): AFArray {.importcpp: "(# << #)".}
+proc `<<`*(lhs: cshort; rhs: AFArray): AFArray {.importcpp: "(# << #)".}
+proc `<<`*(lhs: cushort; rhs: AFArray): AFArray {.importcpp: "(# << #)".}
+proc `<<`*(lhs: uint8; rhs: AFArray): AFArray {.importcpp: "(# << #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `<<`*(lhs: clong; rhs: AFArray): AFArray {.importcpp: "(# << #)".}
@@ -515,6 +604,9 @@ proc `<<`*(lhs: AFArray; rhs: bool): AFArray {.importcpp: "(# << #)".}
 proc `<<`*(lhs: AFArray; rhs: cint): AFArray {.importcpp: "(# << #)".}
 proc `<<`*(lhs: AFArray; rhs: cuint): AFArray {.importcpp: "(# << #)".}
 proc `<<`*(lhs: AFArray; rhs: char): AFArray {.importcpp: "(# << #)".}
+proc `<<`*(lhs: AFArray; rhs: cshort): AFArray {.importcpp: "(# << #)".}
+proc `<<`*(lhs: AFArray; rhs: cushort): AFArray {.importcpp: "(# << #)".}
+proc `<<`*(lhs: AFArray; rhs: uint8): AFArray {.importcpp: "(# << #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `<<`*(lhs: AFArray; rhs: clong): AFArray {.importcpp: "(# << #)".}
@@ -532,6 +624,9 @@ proc `>>`*(lhs: bool; rhs: AFArray): AFArray {.importcpp: "(# >> #)".}
 proc `>>`*(lhs: cint; rhs: AFArray): AFArray {.importcpp: "(# >> #)".}
 proc `>>`*(lhs: cuint; rhs: AFArray): AFArray {.importcpp: "(# >> #)".}
 proc `>>`*(lhs: char; rhs: AFArray): AFArray {.importcpp: "(# >> #)".}
+proc `>>`*(lhs: cshort; rhs: AFArray): AFArray {.importcpp: "(# >> #)".}
+proc `>>`*(lhs: cushort; rhs: AFArray): AFArray {.importcpp: "(# >> #)".}
+proc `>>`*(lhs: uint8; rhs: AFArray): AFArray {.importcpp: "(# >> #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `>>`*(lhs: clong; rhs: AFArray): AFArray {.importcpp: "(# >> #)".}
@@ -547,6 +642,9 @@ proc `>>`*(lhs: AFArray; rhs: bool): AFArray {.importcpp: "(# >> #)".}
 proc `>>`*(lhs: AFArray; rhs: cint): AFArray {.importcpp: "(# >> #)".}
 proc `>>`*(lhs: AFArray; rhs: cuint): AFArray {.importcpp: "(# >> #)".}
 proc `>>`*(lhs: AFArray; rhs: char): AFArray {.importcpp: "(# >> #)".}
+proc `>>`*(lhs: AFArray; rhs: cshort): AFArray {.importcpp: "(# >> #)".}
+proc `>>`*(lhs: AFArray; rhs: cushort): AFArray {.importcpp: "(# >> #)".}
+proc `>>`*(lhs: AFArray; rhs: uint8): AFArray {.importcpp: "(# >> #)".}
 
 when sizeof(clong) != sizeof(cint):
   proc `>>`*(lhs: AFArray; rhs: clong): AFArray {.importcpp: "(# >> #)".}
