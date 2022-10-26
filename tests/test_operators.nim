@@ -226,11 +226,66 @@ suite "Bitwise operators":
 
   test "Array & Scalar":
     let x1 = initAFTensor[uint8](2, @[3'u8, 4])
-    let y: uint8 = 1'u8
+    let y: uint8 = 1
     let z1 = x1 & y
     check z1.toSeq() == @[1'u8, 0]
     let z2 = 5'u8 & x1
     check z2.toSeq() == @[1'u8, 4]
+    let x2 = initAfTensor(2, @[3'i16, 4])
+    check (x2 & 5'i16).toSeq() == @[1'i16, 4]
+
+  test "Array | Array":
+    let x = initAFTensor[uint8](2, @[1'u8, 2])
+    let y = initAFTensor[uint8](2, @[3'u8, 3])
+    let z = x | y
+    check z.toSeq() == @[3'u8, 3]
+
+  test "Array | Scalar":
+    let x1 = initAFTensor[uint8](2, @[3'u8, 4])
+    let z1 = x1 | 1'u8
+    check z1.toSeq() == @[3'u8, 5]
+    let z2 = 2'u8 | x1
+    check z2.toSeq() == @[3'u8, 6]
+
+  test "Array ^ Array":
+    let x = initAFTensor[uint8](2, @[1'u8, 2])
+    let y = initAFTensor[uint8](2, @[3'u8, 3])
+    let z = x ^ y
+    check z.toSeq() == @[2'u8, 1]
+
+  test "Array ^ Scalar":
+    let x1 = initAFTensor[uint8](2, @[3'u8, 4])
+    let z1 = x1 ^ 1'u8
+    check z1.toSeq() == @[2'u8, 5]
+    let z2 = 2'u8 ^ x1
+    check z2.toSeq() == @[1'u8, 6]
+
+  test "Array << Array":
+    let x = initAFTensor[uint8](2, @[1'u8, 2])
+    let y = initAFTensor[uint8](2, @[3'u8, 3])
+    let z = x << y
+    check z.toSeq() == @[8'u8, 16]
+
+  test "Array << Scalar":
+    let x1 = initAFTensor[uint8](2, @[3'u8, 4])
+    let z1 = x1 << 1'u8
+    check z1.toSeq() == @[6'u8, 8]
+    let z2 = 2'u8 << x1
+    check z2.toSeq() == @[16'u8, 32]
+
+  test "Array >> Array":
+    let x = initAFTensor[uint8](2, @[3'u8, 3])
+    let y = initAFTensor[uint8](2, @[1'u8, 2])
+    let z = x >> y
+    check z.toSeq() == @[1'u8, 0]
+
+  test "Array >> Scalar":
+    let x1 = initAFTensor[uint8](2, @[3'u8, 4])
+    let z1 = x1 >> 1'u8
+    check z1.toSeq() == @[1'u8, 2]
+    let z2 = 16'u8 >> x1
+    check z2.toSeq() == @[2'u8, 1]
+
 
 
 
