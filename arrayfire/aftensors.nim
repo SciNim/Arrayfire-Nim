@@ -12,7 +12,7 @@ proc initAFTensor*[T](): AFTensor[T] =
 
 proc fromAFArray*[T](result: var AFTensor[T], m: sink AFArray) =
   result.dtype = m.dtype
-  doAssert getDType[T]() == m.dtype()
+  doAssert getDType[T]() == m.dtype(), "Expected: " & $getDType[T]() & " but got: " & $m.dtype()
   # result.array = m
   if result.dtype != m.dtype():
     result.array = m
@@ -69,3 +69,188 @@ proc `$`*[T](x: AFTensor[T]): string =
   result.add "dtype:" & $(x.dtype) & ",\n"
   result.add "array:" & $(x.array)
   result.add ")"
+
+proc toSeq*[T](t: AFTensor[T], count: int = -1): seq[T] =
+  t.array.toSeq(T, count)
+
+
+########################
+# Arithmetic operators #
+########################
+
+proc `+`*[T](lhs, rhs: AFTensor[T]): AFTensor[T] =
+  initAfTensor[T](lhs.array + rhs.array)
+
+proc `+`*[T](val: T, t: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](val + t.array)
+
+proc `+`*[T](t: AFTensor[T], val: T): AFTensor[T] =
+  initAFTensor[T](t.array + val)
+
+proc `+=`*[T](this: var AFTensor[T], val: AFTensor[T]) =
+  this.array += val.array
+
+proc `+=`*[T](this: var AFTensor[T], val: T) =
+  this.array += val
+
+proc `-`*[T](lhs, rhs: AFTensor[T]): AFTensor[T] =
+  initAfTensor[T](lhs.array - rhs.array)
+
+proc `-`*[T](val: T, t: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](val - t.array)
+
+proc `-`*[T](t: AFTensor[T], val: T): AFTensor[T] =
+  initAFTensor[T](t.array - val)
+
+proc `-=`*[T](this: var AFTensor[T], val: AFTensor[T]) =
+  this.array -= val.array
+
+proc `-=`*[T](this: var AFTensor[T], val: T) =
+  this.array -= val
+
+proc `*`*[T](lhs, rhs: AFTensor[T]): AFTensor[T] =
+  initAfTensor[T](lhs.array * rhs.array)
+
+proc `*`*[T](val: T, t: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](val * t.array)
+
+proc `*`*[T](t: AFTensor[T], val: T): AFTensor[T] =
+  initAFTensor[T](t.array * val)
+
+proc `*=`*[T](this: var AFTensor[T], val: AFTensor[T]) =
+  this.array *= val.array
+
+proc `*=`*[T](this: var AFTensor[T], val: T) =
+  this.array *= val
+
+proc `/`*[T](lhs, rhs: AFTensor[T]): AFTensor[T] =
+  initAfTensor[T](lhs.array / rhs.array)
+
+proc `/`*[T](val: T, t: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](val / t.array)
+
+proc `/`*[T](t: AFTensor[T], val: T): AFTensor[T] =
+  initAFTensor[T](t.array / val)
+
+proc `/=`*[T](this: var AFTensor[T], val: AFTensor[T]) =
+  this.array /= val.array
+
+proc `/=`*[T](this: var AFTensor[T], val: T) =
+  this.array /= val
+
+
+proc `-`*[T](t: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](-t.array)
+
+
+proc `%`*[T](lhs, rhs: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](lhs.array % rhs.array)
+
+proc `%`*[T](val: T, t: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](val % t.array)
+
+proc `%`*[T](t: AFTensor[T], val: T): AFTensor[T] =
+  initAFTensor[T](t.array % val)
+
+# Logical Operators
+proc `!`*[T](t: AFTensor[T]): AFTensor[bool] =
+  initAFTensor[bool](!(t.array))
+
+proc `==`*[T](lhs, rhs: AFTensor[T]): AFTensor[bool] =
+  initAFTensor[bool](lhs.array == rhs.array)
+
+proc `==`*[T](val: T, t: AFTensor[T]): AFTensor[bool] =
+  initAFTensor[bool](val == t.array)
+
+proc `==`*[T](t: AFTensor[T], val: T): AFTensor[bool] =
+  initAFTensor[bool](t.array == val)
+
+proc `<`*[T](lhs, rhs: AFTensor[T]): AFTensor[bool] =
+  initAFTensor[bool](lhs.array < rhs.array)
+
+proc `<`*[T](val: T, t: AFTensor[T]): AFTensor[bool] =
+  initAFTensor[bool](val < t.array)
+
+proc `<`*[T](t: AFTensor[T], val: T): AFTensor[bool] =
+  initAFTensor[bool](t.array < val)
+
+proc `<=`*[T](lhs, rhs: AFTensor[T]): AFTensor[bool] =
+  initAFTensor[bool](lhs.array <= rhs.array)
+
+proc `<=`*[T](val: T, t: AFTensor[T]): AFTensor[bool] =
+  initAFTensor[bool](val <= t.array)
+
+proc `<=`*[T](t: AFTensor[T], val: T): AFTensor[bool] =
+  initAFTensor[bool](t.array <= val)
+
+proc `&&`*[T](lhs, rhs: AFTensor[T]): AFTensor[bool] =
+  initAFTensor[bool](lhs.array && rhs.array)
+
+proc `&&`*[T](val: T, t: AFTensor[T]): AFTensor[bool] =
+  initAFTensor[bool](val && t.array)
+
+proc `&&`*[T](t: AFTensor[T], val: T): AFTensor[bool] =
+  initAFTensor[bool](t.array && val)
+
+proc `||`*[T](lhs, rhs: AFTensor[T]): AFTensor[bool] =
+  initAFTensor[bool](lhs.array || rhs.array)
+
+proc `||`*[T](val: T, t: AFTensor[T]): AFTensor[bool] =
+  initAFTensor[bool](val || t.array)
+
+proc `||`*[T](t: AFTensor[T], val: T): AFTensor[bool] =
+  initAFTensor[bool](t.array || val)
+
+# Bitwise Operators
+
+proc `&`*[T: SomeInteger](lhs, rhs: AFTensor[T]): AFTensor[T] =
+  ## Bitwise and
+  initAFTensor[T](lhs.array & rhs.array)
+
+proc `&`*[T: SomeInteger](val: T, t: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](val & t.array)
+
+proc `&`*[T: SomeInteger](t: AFTensor[T], val: T): AFTensor[T] =
+  initAFTensor[T](t.array & val)
+
+proc `|`*[T: SomeInteger](lhs, rhs: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](lhs.array | rhs.array)
+
+proc `|`*[T: SomeInteger](val: T, t: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](val | t.array)
+
+proc `|`*[T: SomeInteger](t: AFTensor[T], val: T): AFTensor[T] =
+  initAFTensor[T](t.array | val)
+
+proc `^`*[T: SomeInteger](lhs, rhs: AFTensor[T]): AFTensor[T] =
+  ## Bitwise xor
+  initAFTensor[T](lhs.array ^ rhs.array)
+
+proc `^`*[T: SomeInteger](val: T, t: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](val ^ t.array)
+
+proc `^`*[T: SomeInteger](t: AFTensor[T], val: T): AFTensor[T] =
+  initAFTensor[T](t.array ^ val)
+
+proc `<<`*[T: SomeInteger](lhs, rhs: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](lhs.array << rhs.array)
+
+proc `<<`*[T: SomeInteger](val: T, t: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](val << t.array)
+
+proc `<<`*[T: SomeInteger](t: AFTensor[T], val: T): AFTensor[T] =
+  initAFTensor[T](t.array << val)
+
+proc `>>`*[T: SomeInteger](lhs, rhs: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](lhs.array >> rhs.array)
+
+proc `>>`*[T: SomeInteger](val: T, t: AFTensor[T]): AFTensor[T] =
+  initAFTensor[T](val >> t.array)
+
+proc `>>`*[T: SomeInteger](t: AFTensor[T], val: T): AFTensor[T] =
+  initAFTensor[T](t.array >> val)
+
+
+# Misc
+proc nonzeros*[T](t: AFTensor[T]): int =
+  t.array.nonzeros.int

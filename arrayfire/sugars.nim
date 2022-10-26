@@ -80,7 +80,11 @@ proc afa*[T](dims: Dim4, data: openarray[T]): AFArray =
     var pdata = cast[ptr culonglong](unsafeAddr(data[0]))
     # afHost means copy, afDevice means move
     result = bindings.afa[culonglong](dims, pdata, Source.afHost).as(getDtype[T]())
-
+  elif T is int and sizeof(int) == 8:
+    assert sizeof(int) == sizeof(clonglong)
+    var pdata = cast[ptr clonglong](unsafeAddr(data[0]))
+    # afHost means copy, afDevice means move
+    result = bindings.afa[clonglong](dims, pdata, Source.afHost).as(getDtype[T]())
   else:
     var pdata = unsafeAddr(data[0])
     # afHost means copy, afDevice means move
