@@ -66,6 +66,7 @@ when sizeof(clong) != sizeof(cint):
 # Nim on the other hand, use fixed size integer on code generation
 # Hence the workaroud of using clonglong and culonglong instead of the default
 proc afa*[T](dims: Dim4, data: openarray[T]): AFArray =
+  assert dims.elements.int == data.len, "The length of data ($1), doesn't match the number of elements ($2)" % [$data.len, $dims.elements]
   when T is bool:
     var pdata = cast[ptr uint8](unsafeAddr(data[0]))
     # afHost means copy, afDevice means move
@@ -85,6 +86,12 @@ proc afa*[T](dims: Dim4, data: openarray[T]): AFArray =
     var pdata = cast[ptr clonglong](unsafeAddr(data[0]))
     # afHost means copy, afDevice means move
     result = bindings.afa[clonglong](dims, pdata, Source.afHost).as(getDtype[T]())
+  elif T is Complex64:
+    var pdata = cast[ptr AfComplex64](unsafeAddr(data[0]))
+    result = bindings.afa[AfComplex64](dims, pdata, Source.afHost).as(getDtype[T]())
+  elif T is Complex32:
+    var pdata = cast[ptr AfComplex32](unsafeAddr(data[0]))
+    result = bindings.afa[AfComplex32](dims, pdata, Source.afHost).as(getDtype[T]())
   else:
     var pdata = unsafeAddr(data[0])
     # afHost means copy, afDevice means move

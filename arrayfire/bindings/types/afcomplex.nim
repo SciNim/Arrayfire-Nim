@@ -28,10 +28,10 @@ proc imag*[T](c: Complex[T]) : T  =
 proc `$`*(c: AfComplex32) : string ="CF($1 + $2i)" % [$c.real,$c.imag]
 proc `$`*(c: AfComplex64) : string ="CD($1 + $2i)" % [$c.real,$c.imag]
 
-proc complex32*[R,I](r:R, i:I) : AfComplex32 = AfComplex32(real:cfloat(r),imag:cfloat(i))
-proc complex64*[R,I](r:R, i:I) : AfComplex64 = AfComplex64(real:cdouble(r),imag:cdouble(i))
+proc afComplex32*[R,I](r:R, i:I) : AfComplex32 = AfComplex32(real:cfloat(r),imag:cfloat(i))
+proc afComplex64*[R,I](r:R, i:I) : AfComplex64 = AfComplex64(real:cdouble(r),imag:cdouble(i))
 
-proc complex32*[R](r:R) : AfComplex32 =
+proc afComplex32*[R](r:R) : AfComplex32 =
   when R is AfComplex32:
     r
   elif R is AfComplex64:
@@ -39,7 +39,7 @@ proc complex32*[R](r:R) : AfComplex32 =
   else:
     AfComplex32(real:cfloat(r), imag:cfloat(0))
 
-proc complex64*[R](r:R) : AfComplex64 =
+proc afComplex64*[R](r:R) : AfComplex64 =
   when R is AfComplex64:
     r
   elif R is AfComplex32:
@@ -81,6 +81,6 @@ proc `==`*(lhs: AfComplex32; rhs: AfComplex32): bool {.cdecl, importcpp: "(# == 
 proc `==`*(lhs: AfComplex64; rhs: AfComplex64): bool {.cdecl, importcpp: "(# == #)",header : "arrayfire.h".}
 proc abs*(val: AfComplex32): cfloat {.cdecl, importcpp: "abs(@)", header : "arrayfire.h".}
 proc abs*(val: AfComplex64): cdouble {.cdecl, importcpp: "abs(@)", header : "arrayfire.h".}
-proc conj*(val: AfComplex32): cfloat {.cdecl, importcpp: "conj(@)", header : "arrayfire.h".}
-proc conj*(val: AfComplex64): cdouble {.cdecl, importcpp: "conj(@)", header : "arrayfire.h".}
+proc conj*(val: AfComplex32): AfComplex32 {.cdecl, importcpp: "conj(@)", header : "arrayfire.h".}
+proc conj*(val: AfComplex64): AfComplex64 {.cdecl, importcpp: "conj(@)", header : "arrayfire.h".}
 
