@@ -259,9 +259,19 @@ proc to_seq_typed[S, T](a: AFArray, count: int, s: typedesc[S], t: typedesc[T]):
       let source_item = c_ptr[]
 
     when T is Complex32:
-      result.add(complex32(source_item))
+      when S is Complex32:
+        result.add(source_item)
+      elif S is Complex64:
+        result.add(complex32(source_item.re, source_item.im))
+      else:
+        result.add(complex32(source_item.float32))
     elif T is Complex64:
-      result.add(complex64(source_item))
+      when S is Complex64:
+        result.add(source_item)
+      elif S is Complex32:
+        result.add(complex64(source_item.re, source_item.im))
+      else:
+        result.add(complex64(source_item.float64))
     else:
       result.add(T(source_item))
 
@@ -273,9 +283,9 @@ proc to_seq*[T](m: AFArray, t: typedesc[T], count: int = -1): seq[T] =
   ]##
   case m.dtype
     of DType.f32: to_seq_typed(m, count, float32, T)
-    of DType.c32: to_seq_typed(m, count, float32, T)
+    of DType.c32: to_seq_typed(m, count, Complex32, T)
     of DType.f64: to_seq_typed(m, count, float64, T)
-    of DType.c64: to_seq_typed(m, count, float64, T)
+    of DType.c64: to_seq_typed(m, count, Complex64, T)
     of DType.b8: to_seq_typed(m, count, bool, T)
     of DType.s32: to_seq_typed(m, count, int32, T)
     of DType.u32: to_seq_typed(m, count, uint32, T)

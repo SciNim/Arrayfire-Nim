@@ -80,4 +80,11 @@ suite "AfComplex":
     check c32.conj() == afComplex32(1.0, -2.0)
     let c64 = afComplex64(1.0, 2.0)
     check c64.conj() == afComplex64(1.0, -2.0)
+
+
+suite "Complex Arrays":
+  test "Construction from Complex":
+    let x = initAfTensor[Complex32](2, @[complex32(1, 2), complex32(3, 4)])
+    check x.toSeq() == @[complex32(1, 2), complex32(3, 4)]
+    
     
