@@ -71,6 +71,9 @@ proc `$`*[T](x: AFTensor[T]): string =
   result.add "array:" & $(x.array)
   result.add ")"
 
+proc asType*[T, S](x: AFTensor[T], newType: typedesc[S]): AFTensor[S] =
+  initAfTensor[S](x.array.asType(S))
+
 proc toSeq*[T](t: AFTensor[T], count: int = -1): seq[T] =
   t.array.toSeq(T, count)
 
@@ -255,11 +258,64 @@ proc `>>`*[T: SomeInteger](t: AFTensor[T], val: T): AFTensor[T] =
 # FFT #
 #######
 
-proc fft*[T: float32 | Complex32](t: AFTensor[T]): AFTensor[Complex32] =
-  initAFTensor[Complex32](fft(t.array)) 
+proc real*(t: AfTensor[Complex32]): AfTensor[float32] =
+  initAFTensor[float32](t.array.real())
 
-proc fft*[T: float64 | Complex64](t: AFTensor[T]): AFTensor[Complex64] =
-  initAFTensor[Complex64](fft(t.array)) 
+proc real*(t: AfTensor[Complex64]): AfTensor[float64] =
+  initAFTensor[float64](t.array.real())
+
+proc imag*(t: AfTensor[Complex32]): AfTensor[float32] =
+  initAFTensor[float32](t.array.imag())
+
+proc imag*(t: AfTensor[Complex64]): AfTensor[float64] =
+  initAFTensor[float64](t.array.imag())
+
+proc conjg*(t: AfTensor[Complex32]): AfTensor[float32] =
+  initAFTensor[float32](t.array.conjg())
+
+proc conjg*(t: AfTensor[Complex64]): AfTensor[float64] =
+  initAFTensor[float64](t.array.conjg())
+
+proc abs*(t: AfTensor[Complex32]): AfTensor[float32] =
+  initAFTensor[float32](t.array.abs())
+
+proc abs*(t: AfTensor[Complex64]): AfTensor[float64] =
+  initAFTensor[float64](t.array.abs())
+
+proc abs*[T](t: AfTensor[T]): AfTensor[T] =
+  initAFTensor[T](t.array.abs())
+
+proc arg*(t: AfTensor[Complex32]): AfTensor[float32] =
+  initAFTensor[float32](t.array.arg())
+
+proc arg*(t: AfTensor[Complex64]): AfTensor[float64] =
+  initAFTensor[float64](t.array.arg())
+
+proc fft*[T: float32 | Complex32](t: AFTensor[T], length: int = 0): AFTensor[Complex32] =
+  initAFTensor[Complex32](fft(t.array, DimT(length)))
+
+proc fft*[T: float64 | Complex64](t: AFTensor[T], length: int = 0): AFTensor[Complex64] =
+  initAFTensor[Complex64](fft(t.array, DimT(length)))
+
+proc fftNorm*[T: float32 | Complex32](t: AFTensor[T], normFactor: float64, length: int = 0): AFTensor[Complex32] =
+  initAFTensor[Complex32](fftNorm(t.array, normFactor, DimT(length)))
+
+proc fftNorm*[T: float64 | Complex64](t: AFTensor[T], normFactor: float64, length: int = 0): AFTensor[Complex64] =
+  initAFTensor[Complex64](fftNorm(t.array, normFactor, DimT(length)))
+
+proc ifft*[T: Complex32](t: AFTensor[T], length: int = 0): AFTensor[Complex32] =
+  initAFTensor[Complex32](ifft(t.array, DimT(length)))
+
+proc ifft*[T: Complex64](t: AFTensor[T], length: int = 0): AFTensor[Complex64] =
+  initAFTensor[Complex64](ifft(t.array, DimT(length)))
+
+proc ifftNorm*[T: Complex32](t: AFTensor[T], normFactor: float64, length: int = 0): AFTensor[Complex32] =
+  initAFTensor[Complex32](ifftNorm(t.array, normFactor, DimT(length)))
+
+proc ifftNorm*[T: Complex64](t: AFTensor[T], normFactor: float64, length: int = 0): AFTensor[Complex64] =
+  initAFTensor[Complex64](ifftNorm(t.array, normFactor, DimT(length)))
+
+
 
 # Misc
 proc nonzeros*[T](t: AFTensor[T]): int =

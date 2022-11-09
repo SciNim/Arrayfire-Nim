@@ -96,7 +96,14 @@ suite "Complex Arrays":
     check z.toSeq() == @[complex32(1, 2) + complex32(2, 1), complex32(3, 4) + complex32(4, 3)]
 
   test "FFT":
-    let x = initAfTensor(6, @[1'f64, 2, 1, 2, 1, 2])
+    let x = initAfTensor(6, @[1'f64, -1, 1, -1, 1, -1])
+    echo x
+    echo abs(x)
     let f = fft(x)
     echo f
+    echo abs(f)
+    let fi = ifft(f)
+    echo fi
+    echo fi.real()
+    echo (-f).arg()
     

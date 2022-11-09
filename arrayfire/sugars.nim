@@ -297,3 +297,6 @@ proc to_seq*[T](m: AFArray, t: typedesc[T], count: int = -1): seq[T] =
 
 proc first_as*[T](m: AFArray, t: typedesc[T]): T =
   m.to_seq(t, 1)[0]
+
+proc asType*[T](m: AFArray, t: typedesc[T]): AFArray =
+  m.asType(getDtype[T]())

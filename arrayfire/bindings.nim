@@ -78,6 +78,9 @@ proc `type`*(this: AFArray): Dtype
 proc dtype*(this: AFArray): Dtype
   {.noSideEffect, cdecl, importcpp: "type".}
 
+proc asType*(this: AFArray, newType: Dtype): AFArray
+  {.noSideEffect, cdecl, importcpp: "#.as(#)".}
+
 proc af_dims*(this: AFArray; dim: cuint): DimT
   {.noSideEffect, cdecl, importcpp: "dims".}
 
