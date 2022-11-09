@@ -249,31 +249,31 @@ proc to_seq_typed[S, T](a: AFArray, count: int, s: typedesc[S], t: typedesc[T]):
     when S is Complex32:
       var real_ptr = cast[ptr float32](cast[int](cdata) + (i * c_item_size))
       var imag_ptr = cast[ptr float32](cast[int](cdata) + (i * c_item_size)+4)
-      let source_item = complex32(real_ptr[], imag_ptr[])
+      when T is Complex32:
+        let source_item = complex32(real_ptr[], imag_ptr[])
+      elif T is Complex64:
+        let source_item = complex64(real_ptr[], imag_ptr[])
+      else:
+        let source_item = T(real_ptr[])
     elif S is Complex64:
       var real_ptr = cast[ptr float64](cast[int](cdata) + (i * c_item_size))
       var imag_ptr = cast[ptr float64](cast[int](cdata) + (i * c_item_size)+8)
-      let source_item = complex64(real_ptr[], imag_ptr[])
+      when T is Complex32:
+        let source_item = complex32(real_ptr[], imag_ptr[])
+      elif T is Complex64:
+        let source_item = complex64(real_ptr[], imag_ptr[])
+      else:
+        let source_item = T(real_ptr[])
     else:
       var c_ptr = cast[ptr S](cast[int](cdata) + (i * c_item_size))
-      let source_item = c_ptr[]
+      when T is Complex32:
+        let source_item = complex32(c_ptr[].float32)
+      elif T is Complex64:
+        let source_item = complex64(c_ptr[].float64)
+      else:
+        let source_item = T(c_ptr[])
 
-    when T is Complex32:
-      when S is Complex32:
-        result.add(source_item)
-      elif S is Complex64:
-        result.add(complex32(source_item.re, source_item.im))
-      else:
-        result.add(complex32(source_item.float32))
-    elif T is Complex64:
-      when S is Complex64:
-        result.add(source_item)
-      elif S is Complex32:
-        result.add(complex64(source_item.re, source_item.im))
-      else:
-        result.add(complex64(source_item.float64))
-    else:
-      result.add(T(source_item))
+    result.add(source_item)
 
   dealloc(cdata)
 
