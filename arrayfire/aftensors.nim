@@ -1,3 +1,4 @@
+import std / [complex]
 import ./bindings
 import ./sugars
 
@@ -250,6 +251,15 @@ proc `>>`*[T: SomeInteger](val: T, t: AFTensor[T]): AFTensor[T] =
 proc `>>`*[T: SomeInteger](t: AFTensor[T], val: T): AFTensor[T] =
   initAFTensor[T](t.array >> val)
 
+#######
+# FFT #
+#######
+
+proc fft*[T: float32 | Complex32](t: AFTensor[T]): AFTensor[Complex32] =
+  initAFTensor[Complex32](fft(t.array)) 
+
+proc fft*[T: float64 | Complex64](t: AFTensor[T]): AFTensor[Complex64] =
+  initAFTensor[Complex64](fft(t.array)) 
 
 # Misc
 proc nonzeros*[T](t: AFTensor[T]): int =
