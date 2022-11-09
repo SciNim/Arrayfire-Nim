@@ -86,5 +86,12 @@ suite "Complex Arrays":
   test "Construction from Complex":
     let x = initAfTensor[Complex32](2, @[complex32(1, 2), complex32(3, 4)])
     check x.toSeq() == @[complex32(1, 2), complex32(3, 4)]
-    
+    let y = initAfTensor[Complex64](2, @[complex64(1, 2), complex64(3, 4)])
+    check y.toSeq() == @[complex64(1, 2), complex64(3, 4)]
+
+  test "Basic Arithmetic":
+    let x = initAfTensor[Complex32](2, @[complex32(1, 2), complex32(3, 4)])
+    let y = initAfTensor[Complex32](2, @[complex32(2, 1), complex32(4, 3)])
+    let z = x + y
+    check z.toSeq() == @[complex32(1, 2) + complex32(2, 1), complex32(3, 4) + complex32(4, 3)]
     
