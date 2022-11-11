@@ -78,6 +78,9 @@ proc `type`*(this: AFArray): Dtype
 proc dtype*(this: AFArray): Dtype
   {.noSideEffect, cdecl, importcpp: "type".}
 
+proc asType*(this: AFArray, newType: Dtype): AFArray
+  {.noSideEffect, cdecl, importcpp: "#.as(#)".}
+
 proc af_dims*(this: AFArray; dim: cuint): DimT
   {.noSideEffect, cdecl, importcpp: "dims".}
 
@@ -1068,7 +1071,7 @@ proc product_as_float*(matin: AFArray): float =
 
 proc product_as_complex*(matin: AFArray): AfComplex64 =
   var (real, imag) = s_native_product(matin)
-  complex64(real, imag)
+  afComplex64(real, imag)
 
 proc s_native_min*(matin: AFArray): tuple[real: float; imag: float] =
   var real: cdouble = 0
@@ -1084,7 +1087,7 @@ proc min_as_float*(matin: AFArray): float =
 
 proc min_as_complex*(matin: AFArray): AfComplex64 =
   var (real, imag) = s_native_min(matin)
-  complex64(real, imag)
+  afComplex64(real, imag)
 
 proc s_native_max*(matin: AFArray): tuple[real: float; imag: float] =
   var real: cdouble = 0
@@ -1100,7 +1103,7 @@ proc max_as_float*(matin: AFArray): float =
 
 proc max_as_complex*(matin: AFArray): AfComplex64 =
   var (real, imag) = s_native_max(matin)
-  complex64(real, imag)
+  afComplex64(real, imag)
 
 proc s_native_sum*(matin: AFArray): tuple[real: float; imag: float] =
   var real: cdouble = 0
@@ -1116,7 +1119,7 @@ proc sum_as_float*(matin: AFArray): float =
 
 proc sum_as_complex*(matin: AFArray): AfComplex64 =
   var (real, imag) = s_native_sum(matin)
-  complex64(real, imag)
+  afComplex64(real, imag)
 
 proc svd*(matin: AFArray): tuple[u: AFArray; s: AFArray; vt: AFArray] =
   var u: AFArray

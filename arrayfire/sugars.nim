@@ -66,6 +66,7 @@ when sizeof(clong) != sizeof(cint):
 # Nim on the other hand, use fixed size integer on code generation
 # Hence the workaroud of using clonglong and culonglong instead of the default
 proc afa*[T](dims: Dim4, data: openarray[T]): AFArray =
+  assert dims.elements.int == data.len, "The length of data ($1), doesn't match the number of elements ($2)" % [$data.len, $dims.elements]
   when T is bool:
     var pdata = cast[ptr uint8](unsafeAddr(data[0]))
     # afHost means copy, afDevice means move
@@ -85,6 +86,12 @@ proc afa*[T](dims: Dim4, data: openarray[T]): AFArray =
     var pdata = cast[ptr clonglong](unsafeAddr(data[0]))
     # afHost means copy, afDevice means move
     result = bindings.afa[clonglong](dims, pdata, Source.afHost).as(getDtype[T]())
+  elif T is Complex64:
+    var pdata = cast[ptr AfComplex64](unsafeAddr(data[0]))
+    result = bindings.afa[AfComplex64](dims, pdata, Source.afHost).as(getDtype[T]())
+  elif T is Complex32:
+    var pdata = cast[ptr AfComplex32](unsafeAddr(data[0]))
+    result = bindings.afa[AfComplex32](dims, pdata, Source.afHost).as(getDtype[T]())
   else:
     var pdata = unsafeAddr(data[0])
     # afHost means copy, afDevice means move
@@ -242,21 +249,31 @@ proc to_seq_typed[S, T](a: AFArray, count: int, s: typedesc[S], t: typedesc[T]):
     when S is Complex32:
       var real_ptr = cast[ptr float32](cast[int](cdata) + (i * c_item_size))
       var imag_ptr = cast[ptr float32](cast[int](cdata) + (i * c_item_size)+4)
-      let source_item = complex32(real_ptr[], imag_ptr[])
+      when T is Complex32:
+        let source_item = complex32(real_ptr[], imag_ptr[])
+      elif T is Complex64:
+        let source_item = complex64(real_ptr[], imag_ptr[])
+      else:
+        let source_item = T(real_ptr[])
     elif S is Complex64:
       var real_ptr = cast[ptr float64](cast[int](cdata) + (i * c_item_size))
       var imag_ptr = cast[ptr float64](cast[int](cdata) + (i * c_item_size)+8)
-      let source_item = complex64(real_ptr[], imag_ptr[])
+      when T is Complex32:
+        let source_item = complex32(real_ptr[], imag_ptr[])
+      elif T is Complex64:
+        let source_item = complex64(real_ptr[], imag_ptr[])
+      else:
+        let source_item = T(real_ptr[])
     else:
       var c_ptr = cast[ptr S](cast[int](cdata) + (i * c_item_size))
-      let source_item = c_ptr[]
+      when T is Complex32:
+        let source_item = complex32(c_ptr[].float32)
+      elif T is Complex64:
+        let source_item = complex64(c_ptr[].float64)
+      else:
+        let source_item = T(c_ptr[])
 
-    when T is Complex32:
-      result.add(complex32(source_item))
-    elif T is Complex64:
-      result.add(complex64(source_item))
-    else:
-      result.add(T(source_item))
+    result.add(source_item)
 
   dealloc(cdata)
 
@@ -266,9 +283,9 @@ proc to_seq*[T](m: AFArray, t: typedesc[T], count: int = -1): seq[T] =
   ]##
   case m.dtype
     of DType.f32: to_seq_typed(m, count, float32, T)
-    of DType.c32: to_seq_typed(m, count, float32, T)
+    of DType.c32: to_seq_typed(m, count, Complex32, T)
     of DType.f64: to_seq_typed(m, count, float64, T)
-    of DType.c64: to_seq_typed(m, count, float64, T)
+    of DType.c64: to_seq_typed(m, count, Complex64, T)
     of DType.b8: to_seq_typed(m, count, bool, T)
     of DType.s32: to_seq_typed(m, count, int32, T)
     of DType.u32: to_seq_typed(m, count, uint32, T)
@@ -280,3 +297,6 @@ proc to_seq*[T](m: AFArray, t: typedesc[T], count: int = -1): seq[T] =
 
 proc first_as*[T](m: AFArray, t: typedesc[T]): T =
   m.to_seq(t, 1)[0]
+
+proc asType*[T](m: AFArray, t: typedesc[T]): AFArray =
+  m.asType(getDtype[T]())
