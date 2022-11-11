@@ -116,18 +116,6 @@ suite "Complex Arrays":
     let z = x.arg
     check z.toSeq() == @[0'f64, PI / 2, PI / 4]
 
-  test "FFT":
-    let x = initAfTensor(6, @[1'f64, -1, 1, -1, 1, -1])
-    #[ echo x
-    echo abs(x)
-    let f = fft(x)
-    echo f
-    echo abs(f)
-    let fi = ifft(f)
-    echo fi
-    echo fi.real()
-    echo (-f).arg() ]#
-
   
     
 
