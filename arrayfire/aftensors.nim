@@ -270,11 +270,11 @@ proc imag*(t: AfTensor[Complex32]): AfTensor[float32] =
 proc imag*(t: AfTensor[Complex64]): AfTensor[float64] =
   initAFTensor[float64](t.array.imag())
 
-proc conjg*(t: AfTensor[Complex32]): AfTensor[float32] =
-  initAFTensor[float32](t.array.conjg())
+proc conjg*(t: AfTensor[Complex32]): AfTensor[Complex32] =
+  initAFTensor[Complex32](t.array.conjg())
 
-proc conjg*(t: AfTensor[Complex64]): AfTensor[float64] =
-  initAFTensor[float64](t.array.conjg())
+proc conjg*(t: AfTensor[Complex64]): AfTensor[Complex64] =
+  initAFTensor[Complex64](t.array.conjg())
 
 proc abs*(t: AfTensor[Complex32]): AfTensor[float32] =
   initAFTensor[float32](t.array.abs())

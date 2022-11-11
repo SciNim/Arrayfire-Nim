@@ -16,10 +16,6 @@ suite "AfComplex":
     check c64_r.real == 3.14
     check c64_r.imag == 0.0
 
-  test "Complex Tensor":
-    let t = initAFTensor[Complex64](2, @[complex(1.0, 2.0), complex(3.0, 4.0)])
-    echo t
-
   test "AfComplex ==":
     let c1 = afComplex64(3.14, 1.23)
     let c2 = afComplex64(3.14, 1.23)
@@ -95,9 +91,34 @@ suite "Complex Arrays":
     let z = x + y
     check z.toSeq() == @[complex32(1, 2) + complex32(2, 1), complex32(3, 4) + complex32(4, 3)]
 
+  test "real":
+    let x = initAfTensor[Complex32](2, @[complex32(1, 2), complex32(3, 4)])
+    let z = x.real
+    check z.toSeq() == @[1'f32, 3]
+
+  test "imag":
+    let x = initAfTensor[Complex32](2, @[complex32(1, 2), complex32(3, 4)])
+    let z = x.imag
+    check z.toSeq() == @[2'f32, 4]
+
+  test "conjg":
+    let x = initAfTensor[Complex32](2, @[complex32(1, 2), complex32(3, 4)])
+    let z = x.conjg
+    check z.toSeq() == @[complex32(1, -2), complex32(3, -4)]
+
+  test "abs":
+    let x = initAfTensor[Complex32](2, @[complex32(1, 2), complex32(3, 4)])
+    let z = x.abs
+    check z.toSeq() == @[abs(complex32(1, 2)), abs(complex32(3, 4))]
+
+  test "arg":
+    let x = initAfTensor[Complex64](3, @[complex64(1, 0), complex64(0, 1), complex64(1 / sqrt(2'f64), 1 / sqrt(2'f64))])
+    let z = x.arg
+    check z.toSeq() == @[0'f64, PI / 2, PI / 4]
+
   test "FFT":
     let x = initAfTensor(6, @[1'f64, -1, 1, -1, 1, -1])
-    echo x
+    #[ echo x
     echo abs(x)
     let f = fft(x)
     echo f
@@ -105,5 +126,9 @@ suite "Complex Arrays":
     let fi = ifft(f)
     echo fi
     echo fi.real()
-    echo (-f).arg()
+    echo (-f).arg() ]#
+
+  
+    
+
     
