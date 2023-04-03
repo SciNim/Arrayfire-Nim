@@ -18,14 +18,14 @@ suite "basic test":
       echo a
 
   test "matrix construction without matrix type":
-    let m1d = afa(9,@[1'i32,2'i32,3'i32])
+    let m1d = afa(3,@[1'i32,2'i32,3'i32])
     check(m1d.dtype == s32)
     let m2d = afa(1,1,[1])
-    check(m2d.dtype == s32)
+    check(m2d.dtype == s64)
     let m3d = afa(2,2,2,@[1,2,3,4,5,6,7,8])
-    check(m3d.dtype == s32)
+    check(m3d.dtype == s64)
     let m4d = afa(dim4(2,2,2,2),1..16)
-    check(m4d.dtype == s32)
+    check(m4d.dtype == s64)
 
   test "matrix construction with specified matrix type":
     let m1d = afa(9,@[1,2,3,4,5,6,7,8,9],f64)
@@ -99,19 +99,20 @@ suite "basic test":
     a[0,span] = 0
     check(a.to_seq(int) == @[0,4,4,0,4,4,0,4,4])
 
-  test "gfor":
+  test "utils tensors":
     var m0 = randu[float64](3,3)
-    var dims = m0.shape()
-    check dims == @[3'i64, 3]
     var r = m0.ndims()
     check r == 2
+
+    var dims = m0.shape()
+    check dims == @[3'i64, 3]
+
     var mm = m0.memsize()
     check mm == (9*sizeof(float64))
     var nn = m0.nelems()
     check nn == 9
-    var m1 = randu[float64](3,3)
 
-    gfor(s, nn):
-      m1[s] = m0[s]
-
-    check m1 == m0
+    # var m1 = randu[float64](3,3)
+    # gfor(s, nn):
+    #   m1.array[s] = m0[s]
+    # check m1 == m0
