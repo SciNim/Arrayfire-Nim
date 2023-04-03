@@ -50,7 +50,7 @@ proc get_DType_size*(at: DType): int =
 
 let iend*: cint = -1
 
-converter toAFArray*(s: AF_SEQ): AFArray = s.get_AFArray()
+converter toAFArray*(s: AfSeq): AFArray = s.get_AFArray()
 
 converter toAFArray*(mv: AFArray_View): AFArray = mv.get_AFArray()
 
@@ -175,11 +175,11 @@ proc randu*(dims: openarray[int], ty: Dtype = f32): AFArray =
 proc randn*(dims: openarray[int], ty: Dtype = f32): AFArray =
   randn(dim4s(dims), ty)
 
-proc mseq*[T1: int | float | int32 | int64](last: T1): AF_Seq =
+proc mseq*[T1: int | float | int32 | int64](last: T1): AfSeq =
   mseq(cdouble(last))
 
 proc mseq*[T1: int | float | int32 | int64,
-           T2: int | float | int32 | int64](first: T1, last: T2): AF_Seq =
+           T2: int | float | int32 | int64](first: T1, last: T2): AfSeq =
   mseq(cdouble(first), cdouble(last))
 
 proc mseq*[T1: int | float | int32 | int64,
@@ -187,21 +187,21 @@ proc mseq*[T1: int | float | int32 | int64,
            T3: int | float | int32 | int64, ](first: T1, last: T2, step: T3) =
   mseq(cdouble(first), cdouble(last), cdouble(step))
 
-proc begin(this: AF_Seq): cdouble
+proc begin(this: AfSeq): cdouble
   {.importcpp: "#.s.begin", header: "arrayfire.h".}
 
-proc until(this: AF_Seq): cdouble
+proc until(this: AfSeq): cdouble
   {.importcpp: "#.s.end", header: "arrayfire.h".}
 
-proc step(this: AF_Seq): cdouble
+proc step(this: AfSeq): cdouble
   {.importcpp: "#.s.step", header: "arrayfire.h".}
 
-proc getContent*(m: AF_Seq): tuple[start: float, until: float, step: float] =
+proc getContent*(m: AfSeq): tuple[start: float, until: float, step: float] =
   (m.begin, m.until, m.step)
 
-proc `$`*(m: AF_Seq): string =
+proc `$`*(m: AfSeq): string =
   let vals = m.getContent()
-  "AF_Seq[from: $1, until $2, step: $3]"%[$vals[0], $vals[1], $vals[2]]
+  "AfSeq[from: $1, until $2, step: $3]"%[$vals[0], $vals[1], $vals[2]]
 
 proc len*(m: AFArray): int =
   int(m.elements())

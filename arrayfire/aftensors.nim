@@ -43,6 +43,43 @@ proc initAFTensor*[T](dim0: DimT, dim1: DimT, dim2: DimT, dim3: DimT, datas: ope
   result.dtype = getDtype[T]()
   result.array = sugars.afa(dim0, dim1, dim2, dim3, datas, result.dtype)
 
+# proc randu*[T](dims: Dim4; r: var RandomEngine): AFTensor[T] =
+#   fromAFArray(result,
+#               randu(dims, r, result.dtype))
+
+proc randu*[T](dims: Dim4): AFTensor[T] =
+  fromAFArray(result,
+              randu(dims, result.dtype))
+
+proc randu*[T](d0: DimT): AFTensor[T] =
+  fromAFArray(result,
+              randu(d0, result.dtype))
+
+proc randu*[T](d0, d1: DimT): AFTensor[T] =
+  fromAFArray(result,
+              randu(d0, d1, result.dtype))
+
+proc randu*[T](d0, d1, d2: DimT): AFTensor[T] =
+  fromAFArray(result,
+              randu(d0, d1, result.dtype))
+
+proc randu*[T](d0, d1, d2, d3: DimT): AFTensor[T] =
+  fromAFArray(result,
+              randu(d0, d1, d2, d3, result.dtype))
+
+proc shape*[T](aft: AFTensor[T]) : seq[int64] =
+  result = toSeq(aft.array.dims())
+
+proc ndims*[T](aft: AFTensor[T]) : int64 =
+  result = int64(aft.array.ndims())
+
+proc nelems*[T](aft: AFTensor[T]) : int64 =
+  result = int64(aft.array.elements())
+
+proc memsize*[T](aft: AFTensor[T]) : int64 =
+  result = int64(sizeof(T) div sizeof(byte))*nelems(aft)
+
+
 # TODO Figure out Slice
 # proc initAFTensor*[T](dims: Dim4, slice: Slice[T]) : AFTensor[T] =
 #   result.dtype = getDtype[T]()

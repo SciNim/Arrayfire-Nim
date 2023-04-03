@@ -98,3 +98,20 @@ suite "basic test":
     #set first row to 0
     a[0,span] = 0
     check(a.to_seq(int) == @[0,4,4,0,4,4,0,4,4])
+
+  test "gfor":
+    var m0 = randu[float64](3,3)
+    var dims = m0.shape()
+    check dims == @[3'i64, 3]
+    var r = m0.ndims()
+    check r == 2
+    var mm = m0.memsize()
+    check mm == (9*sizeof(float64))
+    var nn = m0.nelems()
+    check nn == 9
+    var m1 = randu[float64](3,3)
+
+    gfor(s, nn):
+      m1[s] = m0[s]
+
+    check m1 == m0

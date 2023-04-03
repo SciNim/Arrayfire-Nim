@@ -57,6 +57,10 @@ proc `[]`*(d: Dim4; i: int): int =
   ##Index access to the dim4 dimensions
   int(d[cuint(i)])
 
+proc toSeq*(d: Dim4): seq[int64] =
+  result = newSeq[int64]()
+  for i in 0..<4:
+    result.add(int64(d[i]))
 
 proc `$`*(d: Dim4): string =
   var elems = newSeq[DimT]()

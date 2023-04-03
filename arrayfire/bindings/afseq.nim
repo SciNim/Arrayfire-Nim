@@ -1,40 +1,40 @@
 import ./types
 
-proc mseq*(length: cdouble = 0): AF_Seq
+proc mseq*(length: cdouble = 0): AfSeq
   {.cdecl, constructor, importcpp: "af::seq(@)", header: "arrayfire.h".}
 
-proc destroyseq*(this: var AF_Seq) {.cdecl, importcpp: "#.~seq()", header: "arrayfire.h".}
+proc destroyseq*(this: var AfSeq) {.cdecl, importcpp: "#.~seq()", header: "arrayfire.h".}
 
-proc mseq*(begin: cdouble; last: cdouble; step: cdouble = 1): AF_Seq
+proc mseq*(begin: cdouble; last: cdouble; step: cdouble = 1): AfSeq
   {.cdecl, constructor, importcpp: "af::seq(@)", header: "arrayfire.h".}
 
-proc mseq*(afs: AF_SEQ; isGfor: bool): AF_Seq
+proc mseq*(afs: AfSeq; isGfor: bool): AfSeq
   {.cdecl, constructor, importcpp: "af::seq(@)", header: "arrayfire.h".}
 
-proc mseq*(s: AF_Seq): AF_Seq
+proc mseq*(s: AfSeq): AfSeq
   {.cdecl, constructor, importcpp: "seq(@)", header: "arrayfire.h".}
 
-proc `-`*(this: var AF_SEQ): AF_SEQ
+proc `-`*(this: var AfSeq): AfSeq
   {.cdecl, importcpp: "(- #)", header: "arrayfire.h".}
 
-proc `+`*(this: var AF_SEQ; x: cdouble): AF_SEQ
+proc `+`*(this: var AfSeq; x: cdouble): AfSeq
   {.cdecl, importcpp: "(# + #)", header: "arrayfire.h".}
 
-proc `-`*(this: var AF_SEQ; x: cdouble): AF_SEQ
+proc `-`*(this: var AfSeq; x: cdouble): AfSeq
   {.cdecl, importcpp: "(# - #)",
     header: "arrayfire.h".}
-proc `*`*(this: var AF_SEQ; x: cdouble): AF_SEQ
+proc `*`*(this: var AfSeq; x: cdouble): AfSeq
   {.cdecl, importcpp: "(# * #)", header: "arrayfire.h".}
 
-proc `+`*(this: var AF_SEQ; x: cdouble; y: AF_SEQ): AF_SEQ
+proc `+`*(this: var AfSeq; x: cdouble; y: AfSeq): AfSeq
   {.cdecl, importcpp: "(# + #)", header: "arrayfire.h".}
 
-proc `-`*(this: var AF_SEQ; x: cdouble; y: AF_SEQ): AF_SEQ
+proc `-`*(this: var AfSeq; x: cdouble; y: AfSeq): AfSeq
   {.cdecl, importcpp: "(# - #)", header: "arrayfire.h".}
 
-proc `*`*(this: var AF_SEQ; x: cdouble; y: AF_SEQ): AF_SEQ
+proc `*`*(this: var AfSeq; x: cdouble; y: AfSeq): AfSeq
   {.cdecl, importcpp: "(# * #)", header: "arrayfire.h".}
 
-proc get_AFArray*(this: AF_SEQ): AFArray
+proc get_AFArray*(this: AfSeq): AFArray
   {.cdecl, importcpp: "#.operator af::array()", header: "arrayfire.h".}
 
