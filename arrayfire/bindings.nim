@@ -875,7 +875,7 @@ proc destroyindex*(this: var Index) {.importcpp: "#.~index()".}
 
 proc constructindex*(idx: cint): Index {.constructor, importcpp: "index(@)".}
 
-proc constructindex*(s0: AF_Seq): Index {.constructor, importcpp: "af::index(@)".}
+proc constructindex*(s0: AfSeq): Index {.constructor, importcpp: "af::index(@)".}
 
 proc constructindex*(idx0: AFArray): Index {.constructor, importcpp: "af::index(@)".}
 
@@ -885,7 +885,7 @@ proc isspan*(this: Index): bool {.noSideEffect, importcpp: "isspan".}
 
 proc get*(this: Index): IndexT {.noSideEffect, importcpp: "get".}
 
-proc constructindex*(idx0: var AF_Seq): Index {.constructor, importcpp: "index(@)".}
+proc constructindex*(idx0: var AfSeq): Index {.constructor, importcpp: "index(@)".}
 
 proc constructindex*(idx0: var AFArray): Index {.constructor, importcpp: "index(@)".}
 
